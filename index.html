@@ -2,11 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Connect to app.php</title>
 </head>
 <body>
-    <p>Hello world</p>
-    
+    <h1>Welcome</h1>
+    <form action="app.php" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Send to app.php</button>
+    </form>
+</body>
+</html>
+<?php
+$name = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>App Response</title>
+</head>
+<body>
+    <?php if ($name): ?>
+        <h1>Hello, <?php echo $name; ?>!</h1>
+        <p>Your form was submitted successfully.</p>
+        <p><a href="index.html">Back to the form</a></p>
+    <?php else: ?>
+        <h1>No name received</h1>
+        <p>Please submit the form from <a href="index.html">index.html</a>.</p>
+    <?php endif; ?>
 </body>
 </html>
